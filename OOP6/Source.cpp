@@ -329,8 +329,10 @@ public:
 
 void main() {
 	auto c = new Computer("Asus", "zenbook", "RTX 3050 ti", "qled", 10, 16, 64, 1000, true);
-	ComputerStore compstore("medovik", "bufet");
+	ComputerStore compstore("medovik", "28May");
 	compstore.AddComputer(new Computer ("Hp", "PAvillon", "RTX 3040 ti", "qled", 10, 8, 256, 1200, true));
+	cout << compstore << endl;
+	compstore.DeleteComputer(101);
 	cout << compstore << endl;
 
 }
