@@ -1,270 +1,286 @@
 #include<iostream>
+#include <assert.h>
 using namespace std;
 
-
-
 class Computer {
-	static int staticId;
-	int objectId;
-	char* model;
+
+	static int staticID;
+	int id;
 	char* vendor;
-	char* videoCard;
+	char* model;
+	char* videocard;
 	char* monitor;
-	double cpuHz;
+	double cpuhz;
 	int core;
 	int ram;
-	int discSize;
-	bool isSSD=false;
+	int discsize;
+	bool isSSD;
+
 public:
-	static int staticId;
+
+	void SetVendor(const char* value) {
+		delete[]vendor;
+		int len = strlen(value) + 1;
+		vendor = new char[len];
+		strcpy_s(vendor, len, value);
+	}
+
+	void SetModel(const char* value) {
+		delete[]model;
+		int len = strlen(value) + 1;
+		model = new char[len];
+		strcpy_s(model, len, value);
+	}
+
+	void SetVideoCard(const char* value) {
+		delete[]videocard;
+		int len = strlen(value) + 1;
+		videocard = new char[len];
+		strcpy_s(videocard, len, value);
+	}
+
+	void SetMonitor(const char* value) {
+		delete[]monitor;
+		int len = strlen(value) + 1;
+		monitor = new char[len];
+		strcpy_s(monitor, len, value);
+	}
+
+	void SetCpuHz(double value) {
+		cpuhz = value;
+	}
+
+	void SetCore(int value) {
+		core = value;
+	}
+
+	void SetRam(int value) {
+		ram = value;
+	}
+
+	void SetDiscSize(int value) {
+		discsize = value;
+	}
+
+	void SetisSSD(bool value) {
+		isSSD = value;
+	}
+
+	int GetId()const {
+		return this->id;
+	}
+
+	const char* GetVendor()const {
+		return this->vendor;
+	}
+
+	const char* GetModel()const {
+		return this->model;
+	}
+
+	const char* GetVideoCard()const {
+		return this->videocard;
+	}
+
+	const char* GetMonitor()const {
+		return this->monitor;
+	}
+
+	double GetCpuHz()const {
+		return this->cpuhz;
+	}
+
+	int GetCore()const {
+		return this->core;
+	}
+
+	int GetRam()const {
+		return this->ram;
+	}
+
+	int GetDiscSize()const {
+		return this->discsize;
+	}
+
+	bool GetisSSD()const {
+		return this->isSSD;
+	}
 
 	Computer() {
-		objectId = staticId++;
-		model=(nullptr);
-		vendor=(nullptr);
-		videoCard=(nullptr);
-		monitor=(nullptr);
+
+		id = staticID++;
+		vendor = nullptr;
+		model = nullptr;
+		videocard = nullptr;
+		monitor = nullptr;
 		SetCpuHz(0);
 		SetCore(0);
 		SetRam(0);
 		SetDiscSize(0);
-		SetIsSdd(0);
+		SetisSSD(0);
+
+	}
+
+	Computer(const char* vendor, const char* model, const char* videocard, const char* monitor, double cpuhz, int core, int ram, int discsize, bool isSSD) {
+
+		id = staticID++;
+		SetVendor(vendor);
+		SetModel(model);
+		SetVideoCard(videocard);
+		SetMonitor(monitor);
+		SetCpuHz(cpuhz);
+		SetCore(core);
+		SetRam(ram);
+		SetDiscSize(discsize);
+		SetisSSD(isSSD);
+
 	}
 
 	Computer(const Computer& other) {
-		objectId = other.objectId;
-		SetId(other.staticId);
-		SetModel(other.model);
+
+		id = other.id;
 		SetVendor(other.vendor);
-		SetVideoCard(other.videoCard);
+		SetModel(other.model);
+		SetVideoCard(other.videocard);
 		SetMonitor(other.monitor);
-		SetCpuHz(other.cpuHz);
+		SetCpuHz(other.cpuhz);
 		SetCore(other.core);
 		SetRam(other.ram);
-		SetDiscSize(other.discSize);
-		SetIsSdd(other.isSSD);
-	}
-	Computer(int staticId, const char* model, const char* vendor, const char* videoCard, const char* monitor, double cpuHz, int core, int ram, int discSize, bool isSSD) {
-		SetId(staticId);
-		SetModel(model);
-		SetVendor(vendor);
-		SetVideoCard(videoCard);
-		SetMonitor(monitor);
-		SetCpuHz(cpuHz);
-		SetCore(core);
-		SetRam(ram);
-		SetDiscSize(discSize);
-		SetIsSdd(isSSD);
-		objectId = staticId++;
+		SetDiscSize(other.discsize);
+		SetisSSD(other.isSSD);
+
 	}
 
 	Computer& operator=(const Computer& other) {
-		SetId(other.staticId);
-		SetModel(other.model);
+
 		SetVendor(other.vendor);
-		SetVideoCard(other.videoCard);
+		SetModel(other.model);
+		SetVideoCard(other.videocard);
 		SetMonitor(other.monitor);
-		SetCpuHz(other.cpuHz);
+		SetCpuHz(other.cpuhz);
 		SetCore(other.core);
 		SetRam(other.ram);
-		SetDiscSize(other.discSize);
-		SetIsSdd(other.isSSD);
-		return*this;
+		SetDiscSize(other.discsize);
+		SetisSSD(other.isSSD);
+		return *this;
 	}
 
-	friend ostream& operator<<(ostream out, const Computer& other) {
-		out << "===================COMPUTER INFO==================  " << endl;
-		out << "OBject ID : " << other.objectId;
-		out << "Model : " << other.model;
-		out << "Vendor : " << other.vendor;
-		out << "Video Card : " << other.videoCard;
-		out << "Monitor : " << other.monitor;
-		out << "Cpu hz : " << other.cpuHz;
-		out << "Core : " << other.core;
-		out << "Ram : " << other.ram;
-		out << "Disc size : " << other.discSize;
-		out << "Is SSD : " << other.isSSD;
+	friend ostream& operator<<(ostream& out, const Computer& comp) {
+		out << "Computer Information" << endl;
+		out << "Object Id : " << comp.id << endl;
+		out << "Vendor : " << comp.vendor << endl;
+		out << "Model : " << comp.model << endl;
+		out << "Monitor : " << comp.monitor << endl;
+		out << "Cpu Hz : " << comp.cpuhz << endl;
+		out << "Core : " << comp.core << endl;
+		out << "Ram : " << comp.ram << endl;
+		out << "Disc Size : " << comp.discsize << endl;
+		out << "is SSD : " << comp.isSSD << endl;
 		return out;
-
 	}
-	friend istream& operator<<(istream in, Computer& other) {
-		char* bf = new char[100] {};
+
+	friend istream& operator>>(istream& in, Computer& comp) {
+
+		char* buffer = new char[100];
 		cout << "Model : ";
-		in.getline(bf, 100);
-		other.SetModel(bf);
+		in.getline(buffer, 100);
+		comp.SetModel(buffer);
 
 		cout << "Vendor : ";
-		in.getline(bf, 100);
-		other.SetVendor(bf);
+		in.getline(buffer, 100);
+		comp.SetVendor(buffer);
 
-		cout << "Video card : ";
-		in.getline(bf, 100);
-		other.SetVideoCard(bf);
+		cout << "VideoCard : ";
+		in.getline(buffer, 100);
+		comp.SetVideoCard(buffer);
 
-		cout << "Moniotr : ";
-		in.getline(bf, 100);
-		other.SetMonitor(bf);
+		cout << "Monitor : ";
+		in.getline(buffer, 100);
+		comp.SetMonitor(buffer);
 
-		cout << "Cpu hz : ";
-		double y;
-		cin >> y;
-		other.SetCpuHz(y);
+		cout << "Cpu Hz : ";
+		double cpu;
+		cin >> cpu;
+		comp.SetCpuHz(cpu);
 
 		cout << "Core : ";
 		int c;
 		cin >> c;
-		other.SetCore(c);
+		comp.SetCore(c);
 
 		cout << "Ram : ";
 		int r;
 		cin >> r;
-		other.SetRam(r);
+		comp.SetRam(r);
 
-		cout << "Disc size  : ";
+		cout << "Disc Size : ";
 		int ds;
 		cin >> ds;
-		other.SetDiscSize(ds);
+		comp.SetDiscSize(ds);
 
-		cout << "Is SSD or NOT? (1-Yes, 0-No)";
-		int ssd;
-		cin >> ssd;
-		other.SetIsSdd(ssd);
+		cout << "is SSD ? :";
+		int is;
+		cin >> is;
+		comp.SetisSSD(is);
 
-		delete[]bf;
+		delete[]buffer;
 		return in;
 	}
 
-	void SetId(int & staticId) {
-		
-		this->staticId = staticId;
-	}
-	void SetModel(const char* model) {
-		int l = strlen(model);
-		this->model = new char[l + 1] {};
-		strcpy_s(this->model, l + 1, model);
-
-	}
-	void SetVendor(const char* vendor) {
-		int l = strlen(vendor);
-		this->vendor = new char[l + 1] {};
-		strcpy_s(this->vendor, l + 1, vendor);
-	}
-	void SetVideoCard(const char* videoCard) {
-		int l = strlen(videoCard);
-		this->videoCard = new char[l + 1] {};
-		strcpy_s(this->videoCard, l + 1, videoCard);
-	}
-	void SetMonitor(const char* monitor) {
-		int l = strlen(monitor);
-		this->monitor = new char[l + 1] {};
-		strcpy_s(this->monitor, l + 1, monitor);
-	}
-	void SetCpuHz(const double& cpuHz) {
-		this->cpuHz = cpuHz;
-	}
-	void SetCore(const int& core) {
-		this->core = core;
-	}
-	void SetRam(const int& ram) {
-		this->ram = ram;
-	}
-	void SetDiscSize(const int& discSize) {
-		this->discSize = discSize;
-	}
-	void SetIsSdd(const bool isSSD) {
-		this->isSSD = isSSD;
-	}
-	int GetObjectId()const {
-		return objectId;
-	}
-	char* GetModel()const {
-		return model;
-	}
-	char* GetVendor()const {
-		return vendor;
-	}
-	char* GetVideoCard()const {
-		return videoCard;
-	}
-	char* GetMonitor()const {
-		return monitor;
-	}
-	double GetCpuHz()const {
-		return cpuHz;
-	}
-	int GetCore()const {
-		return core;
-	}
-	int GetRam()const {
-		return ram;
-	}
-	int GetDiscSize()const {
-		return discSize;
-	}
-	bool GetSdd()const {
-		return isSSD;
-	};
-
-
-
 	~Computer() {
-		delete[]model;
 		delete[]vendor;
-		delete[]videoCard;
+		delete[]model;
+		delete[]videocard;
 		delete[]monitor;
 	}
+
+
 };
-int Computer::staticId = 0;
-
-
+int Computer::staticID;
 
 class ComputerStore {
-	char* storeName;
-	char* storeAddress;
-	int count = 0;
+
+	char* name;
+	char* address;
 	Computer** computers;
-	
+	int count;
+
 public:
 
-	ComputerStore( char* storeName, char* storeAddress) {
-		SetStoreName(storeName);
-		StoreAdress(storeAddress);
+	ComputerStore(const char* name, const char* add) {
+		SetName(name);
+		SetAddress(add);
 		computers = nullptr;
 		count = 0;
 	}
 
-
-	void SetStoreName(const char* storeName) {
-		if (storeName != nullptr)
-		{
-			int l = strlen(storeName);
-			this->storeName = new char[l + 1] {};
-			strcpy_s(this->storeName, l + 1, storeName);
-
-		}
+	void SetName(const char* value) {
+		delete[]name;
+		int len = strlen(value) + 1;
+		name = new char[len];
+		strcpy_s(name, len, value);
 	}
-	void StoreAdress(const char* storeAddress) {
-		if (storeAddress != nullptr)
-		{
-			int l = strlen(storeAddress);
-			this->storeAddress = new char[l + 1] {};
-			strcpy_s(this->storeAddress, l + 1, storeAddress);
 
-		}
+	void SetAddress(const char* value) {
+		delete[]address;
+		int len = strlen(value) + 1;
+		address = new char[len];
+		strcpy_s(address, len, value);
 	}
-	 char* GetStoreName() {
-		return storeName;
+
+	const char* GetName()const {
+		return this->name;
 	}
-	 char* GetStoreAdress() {
-		return storeAddress;
+
+	const char* GetAddress()const {
+		return this->address;
 	}
 
 	void AddComputer(const Computer* value) {
 		Computer** temp = new Computer * [count + 1];
 		for (size_t i = 0; i < count; i++)
-		{
 			temp[i] = computers[i];
-		}temp[count] = new Computer;
+		temp[count] = new Computer;
 		*temp[count] = *value;
 		delete[]computers;
 		computers = temp;
@@ -273,19 +289,17 @@ public:
 
 	}
 
-
-	void  DeleteComputer(int id) {
+	void DeleteComputer(int id) {
 		int index = -1;
 		for (size_t i = 0; i < count; i++)
 		{
-			if (computers[i]->GetObjectId()==id)
-			{
-				index = i; 
+			if (computers[i]->GetId() == id) {
+				index = i;
 				break;
 			}
 		}
-		if (index!=1&&0<count)
-		{
+
+		if (index != -1) {
 			Computer** temp = new Computer * [count - 1];
 			for (size_t i = 0; i < index; i++)
 			{
@@ -293,47 +307,41 @@ public:
 			}
 			for (size_t i = index; i < count; i++)
 			{
-				temp[i] = computers[i];
+				temp[i] = computers[i + 1];
 			}
-			delete[] computers;
+			delete[]computers;
 			computers = temp;
 			count--;
 			temp = nullptr;
 		}
 	}
 
-	friend ostream& operator<<(ostream& out, const ComputerStore& other) {
-		out <<  other.storeName;
-		out <<  other.storeAddress;
-		for (size_t i = 0; i < other.count; i++)
+	friend ostream& operator<<(ostream& out, const ComputerStore& obj) {
+		out << obj.name << endl;
+		out << obj.address << endl;
+		for (size_t i = 0; i < obj.count; i++)
 		{
-			cout << *other.computers[i] << endl;
+			cout << *obj.computers[i] << endl;
 		}
 		return out;
 	}
 
-	
-	~ComputerStore()
-	{
+	~ComputerStore() {
 		for (size_t i = 0; i < count; i++)
-		{
 			delete computers[i];
-		}delete[] computers;
+		delete[]computers;
+
+
 	}
-
-
 
 };
 
 
-
 void main() {
-	auto c = new Computer("Asus", "zenbook", "RTX 3050 ti", "qled", 10, 16, 64, 1000, true);
-	ComputerStore compstore("medovik", "28May");
-	compstore.AddComputer(new Computer ("Hp", "PAvillon", "RTX 3040 ti", "qled", 10, 8, 256, 1200, true));
-	cout << compstore << endl;
-	compstore.DeleteComputer(101);
-	cout << compstore << endl;
+	ComputerStore store("World telecom", "Akhmedli");
+	store.AddComputer(new Computer("asus", "zenbook pro duo", "gforce rtx 1050ti", "QLED", 2.8, 16, 64, 1024, true));
+	store.AddComputer(new Computer("asus", "zenbook pro", "gforce gtx 1050ti", "QLED", 2.8, 8, 16, 512, true));
+	cout << store << endl;
+
 
 }
-
